@@ -1,0 +1,238 @@
+#!/bin/bash
+#
+#  Copyright (C) 2011-2016, it-novum GmbH <community@openattic.org>
+#
+#  openATTIC is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; version 2.
+#
+#  This package is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+
+
+export OACONFIG="True"
+
+for settings in "/etc/default/openattic" "/etc/sysconfig/openattic"
+do
+	if [[ -f $settings ]]; then
+		for var in "OAUSER" "OADIR" "WEBSERVER_SERVICE"; do
+			eval `grep "^$var" $settings`
+		done
+	fi
+done
+
+if [[ -z $OAUSER ]]; then
+	echo "ERROR: OAUSER is not defined. Please check your configuration."
+	exit 1
+fi
+
+if [[ -z $OADIR ]]; then
+	echo "ERROR: OADIR is not defined. Please check your configuration."
+	exit 1
+fi
+
+if ! [[ -e $OADIR ]]; then
+	echo "ERROR: $OADIR does not exist. Please check your installation."
+	exit 1
+fi
+
+cd $OADIR
+
+if [ "$DJANGO_AUTO_COMPLETE" = "1" ]; then
+	MYCOMMANDS="install restart reload status dbdump version"
+	ARRAY_WORDS=( $COMP_WORDS )
+	compgen -W "$MYCOMMANDS" "${ARRAY_WORDS[COMP_CWORD]}"
+	su "$OAUSER" -c 'python manage.py'
+	exit $?
+fi
+
+set -e
+set -u
+
+usage () {
+	echo "Usage: $0 <command> [<args>]"
+	echo
+	echo "Wrapper around the openATTIC management system."
+	echo
+	echo "Valid commands are:"
+	echo
+	echo "    install      Run this command after you installed new openATTIC modules."
+	echo "    restart      Restart all services that are needed to run openATTIC."
+	echo "    reload       Reload all services that are needed to run openATTIC."
+	echo "    status       Show the status of all services that are needed to run openATTIC."
+	echo "    dbdump       Create a database dump on stdout."
+	echo "    version      Returns version information."
+	echo
+	echo "Any other command will be passed as-is to the openATTIC management system,"
+	echo "which supports the commands and options listed below."
+	echo
+	
+	su "$OAUSER" -c 'python manage.py help'
+	exit 1
+}
+
+if [ "$#" = "0" ]; then
+	usage
+fi
+
+case $1 in
+	help)
+		usage
+		;;
+
+	install)
+		if ! service postgresql status >/dev/null; then
+			# Start database
+			service postgresql start
+		fi
+
+		database_ini="/etc/openattic/database.ini"
+		host=$(sed -rn 's/^[[:blank:]]*host[[:blank:]]*=[[:blank:]]*(.*)[[:blank:]]*/\1/p' $database_ini)
+		if [ "${host}" == 'localhost' ] ; then
+			has_local_database=1
+		else
+			has_local_database=0
+		fi
+
+		db_name=$(sed -rn 's/[[:blank:]]*name[[:blank:]]*=[[:blank:]]*(.*)[[:blank:]]*/\1/p' $database_ini)
+		if [[ -z $db_name ]]; then
+			echo "ERROR: No database name defined in $database_ini"
+			exit 1
+		fi
+
+		db_user=$(sed -rn 's/[[:blank:]]*user[[:blank:]]*=[[:blank:]]*(.*)[[:blank:]]*/\1/p' $database_ini)
+		if [[ -z $db_user ]]; then
+			echo "ERROR: No database username defined in $database_ini"
+			exit 1
+		fi
+
+		if (( has_local_database )) ; then
+			# Check if the database role '$db_user' exists and create it if it doesn't exist.
+			sql="SELECT 1 FROM pg_roles WHERE rolname='${db_user}'"
+			if ! su - postgres -c "psql postgres -tAc \"${sql}\""| grep -q 1 ; then
+				echo "Creating database role \"${db_user}\""
+				pass=$(openssl rand -hex 10)
+				sed -ri --follow-symlinks \
+				    "s/(password[[:blank:]]*=[[:blank:]]*)(.*)/\1${pass}/g" $database_ini
+				if [ $? -ne 0 ]; then
+					echo "Failed to update $database_ini"
+					exit 2
+				fi
+
+				su - postgres -c "psql -c \"CREATE USER ${db_user} WITH PASSWORD '$pass'\""
+				echo "User '${db_user}' created"
+			fi
+
+			# Check if database '${db_name}' exists and create it if it doesn't.
+			dbu=$(su - postgres -c "psql --list" | awk -F'|' " /${db_name}/ { print \$2 }")
+			if [ -n "$dbu" ]; then
+				echo "Database ${db_name} exists, owned by $dbu"
+			else
+				su - postgres -c "psql -c \"CREATE DATABASE ${db_name} WITH OWNER ${db_user}\""
+
+				hba_conf="/var/lib/pgsql/data/pg_hba.conf"
+				if [ -e ${hba_conf} ] ; then
+					sed -i -e 's/ident$/md5/g' ${hba_conf}
+				fi
+				service postgresql reload
+				service postgresql status
+			fi
+		fi
+
+		# Check if the connection can be established with the database user and password.
+		# Set a new password if the connection cannot be established.
+		password=$(sed -rn 's/^[[:blank:]]*password[[:blank:]]*=[[:blank:]]*(.*)[[:blank:]]*/\1/p' $database_ini)
+		# We have to have an '$db_name' database already at this point.
+		if ! PGPASSWORD="$password" psql ${db_name} ${db_user} -h "${host}" --no-password -c "\q" ; then
+			if (( has_local_database )) ; then
+				pass=$(openssl rand -hex 10)
+				sed -ri --follow-symlinks \
+				    "s/(password[[:blank:]]*=[[:blank:]]*)(.*)/\1${pass}/g" $database_ini
+				if [ $? -ne 0 ]; then
+					echo "Failed to update $database_ini"
+					exit 2
+				fi
+
+				su - postgres -c "psql -c \"ALTER USER ${db_user} WITH PASSWORD '$pass'\""
+				echo "Password of database user ${db_user} and database.ini updated"
+			else
+				echo "ERROR: Couldn't establish a connection to the remote database" \
+					"running on ${host}."
+				echo "       Please review the configuration in file ${database_ini}."
+				exit 2
+			fi
+		fi
+
+        # Stop the daemons so they don't keep any locks open
+        # Also, pre-install may need to run DROP DATABASE
+        $0 stop
+
+        python manage.py install --pre-install
+
+        $0 start
+		
+		su "$OAUSER" -c 'python manage.py install --post-install'
+
+		echo "Completed successfully."
+		;;
+	
+	reload)
+		service openattic-systemd restart
+		service "${WEBSERVER_SERVICE}" reload
+		;;
+
+	start|stop|restart|force-reload)
+		service openattic-systemd $1
+		service "${WEBSERVER_SERVICE}" $1
+		;;
+
+	status)
+		service openattic-systemd status || /bin/true
+		service "${WEBSERVER_SERVICE}" status || /bin/true
+		;;
+
+	rootshell|shell)
+		python manage.py shell
+		;;
+
+	dbshell)
+		if which sudo > /dev/null; then
+			DBNAME="`grep '^name' /etc/openattic/database.ini  | cut -d= -f2`"
+			sudo -u postgres -s `which psql` $DBNAME
+		else
+			echo "Please install sudo for this command to work."
+		fi
+		;;
+
+	dbdump|dumpdb)
+		if which sudo > /dev/null; then
+			DBNAME="`grep name /etc/openattic/database.ini  | cut -d= -f2`"
+			sudo -u postgres -s `which pg_dump` $DBNAME
+		else
+			echo "Please install sudo for this command to work."
+		fi
+		;;
+
+	version|--version)
+ 		# Check version.txt for version
+		REL_VER_FILE="/usr/share/openattic/version.txt"
+		DEV_VER_FILE="/srv/openattic/bin/version.txt"
+		if [ -f "$DEV_VER_FILE" ]; then
+			echo "openATTIC DEV: $(grep VERSION $DEV_VER_FILE |awk '{print $3}')"
+		elif [ -f "$REL_VER_FILE" ]; then
+			echo "openATTIC version: $(grep VERSION $REL_VER_FILE |awk '{print $3}')"
+		else
+			echo "No openATTIC version file found."
+		fi
+		echo "Django version: $(python manage.py --version)"
+		;;
+
+	*)
+		# Big thanks to DireFog and pcgod for the following line
+		# First pass my "$@" in a whitespace-preserving way to su's subshell,
+		# which then passes it on to manage.py.
+		su "$OAUSER" -s /bin/sh -- -c 'python manage.py "$@"' dummy "$@"
+		;;
+esac

@@ -1,0 +1,47 @@
+# Python Modules
+backend/cmdlog    /usr/share/openattic
+backend/ifconfig  /usr/share/openattic
+backend/nodb      /usr/share/openattic
+backend/rest      /usr/share/openattic
+backend/systemd   /usr/share/openattic
+backend/sysutils  /usr/share/openattic
+backend/taskqueue /usr/share/openattic
+backend/userprefs /usr/share/openattic
+backend/volumes   /usr/share/openattic
+
+backend/installed_apps.d/20_volumes /usr/share/openattic/installed_apps.d
+backend/installed_apps.d/60_taskqueue /usr/share/openattic/installed_apps.d
+
+# Python files
+backend/__init__.py    /usr/share/openattic
+backend/settings.py    /etc/openattic
+backend/manage.py      /usr/share/openattic
+backend/oa_auth.py     /usr/share/openattic
+backend/pamauth.py     /usr/share/openattic
+backend/processors.py  /usr/share/openattic
+backend/urls.py        /usr/share/openattic
+backend/views.py       /usr/share/openattic
+backend/openattic.wsgi /usr/share/openattic
+backend/serverstats.wsgi /usr/share/openattic
+backend/exception.py   /usr/share/openattic
+backend/utilities.py   /usr/share/openattic
+backend/deepsea.py     /usr/share/openattic
+
+# Init scripts, configs that are shipped upstream
+etc/init.d/openattic-systemd        /etc/init.d
+etc/bash_completion.d/openattic_bash_completion /etc/bash_completion.d
+etc/pam.d/openattic                 /etc/pam.d
+
+# Volume initialization scripts
+etc/openattic/volume_init.d/*       /etc/openattic/volume_init.d
+
+# System Configs
+etc/apache2/conf-available/openattic.conf /etc/apache2/conf-available
+etc/dbus-1/system.d/openattic.conf        /etc/dbus-1/system.d
+etc/logrotate.d/openattic                 /etc/logrotate.d
+version.txt                               /usr/share/openattic
+debian/default/openattic            /etc/default
+
+bin/oaconfig    /usr/sbin
+bin/oavgmanager /usr/sbin
+bin/blkdevzero  /usr/sbin

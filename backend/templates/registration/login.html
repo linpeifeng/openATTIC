@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% comment %}
+ Copyright (C) 2011-2016, it-novum GmbH <community@openattic.org>
+
+ openATTIC is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2.
+
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+{% endcomment %}
+
+{% block Title %}:: Login{% endblock %}
+
+{% block Body %}
+  <h2>Login</h2>
+
+  {% if form.errors %}
+    <p>Username or password don't exist or are not correct. Please try again.</p>
+  {% endif %}
+
+  <form method="post" action=".">{% csrf_token %}
+  <table>
+    {{ form }}
+  </table>
+
+  <input type="submit" value="login" />
+  <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+{% endblock %}

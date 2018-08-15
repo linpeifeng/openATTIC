@@ -1,0 +1,13 @@
+openATTIC for Debian
+--------------------
+
+The openATTIC documentation can be found at http://docs.openattic.org/. The documentation consists
+of three major parts: Installation and Getting Started, User Manual and Developer Documentation.
+
+A good starting point for new administrators is the 'Installation and Getting Started' section. You
+will find information about system requirements, the installation itself and first steps here.
+
+Information about the openATTIC user interface can be found in the 'User Manual' section.
+
+The 'Developer Documentation' section contains useful information for developers, e.g. how to set up
+development system or contribute code to openATTIC.

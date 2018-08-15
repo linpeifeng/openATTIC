@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    "protractor"
+  ],
+  "env": {
+    "protractor": true
+  },
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "rules": {
+    "angular/definedundefined": 0,
+    "angular/foreach": 0,
+    "angular/json-functions": 0,
+    "angular/log": 0,
+    "angular/no-private-call": 0,
+    "angular/typecheck-string": 0,
+    "guard-for-in": 0
+  }
+}

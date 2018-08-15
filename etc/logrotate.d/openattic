@@ -1,0 +1,18 @@
+/var/log/openattic/openattic_systemd.log {
+  rotate 12
+  monthly
+  compress
+  copytruncate
+  missingok
+  notifempty
+}
+
+/var/log/openattic/openattic.log {
+  create 660 openattic openattic
+  rotate 12
+  monthly
+  compress
+  copytruncate
+  missingok
+  notifempty
+}

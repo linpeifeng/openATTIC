@@ -1,0 +1,38 @@
+'use strict';
+(function(){
+  module.exports = {
+    urls: {
+      base: '<proto://addr:port>',
+      ui  : '/openattic/#/', // Use '/#/' for Vagrant boxes.
+      api : '/openattic/api/' // Use '/api/' for Vagrant boxes.
+    },
+
+    username: '<log_in_name>', // Name of the user protractor uses.
+    password: '<user_password>', // Password for the $log_in_name user.
+    sleep   : 2000, // Default browser test sleep time.
+    outDir: '<existing_path>', // Path in which the test report will be stored. If preserveDirectory is false, this folder will be cleaned on each test.
+    preserveDirectory: <boolean>, // Indicates if each report should be created in a separate directory with unique name.
+    captureOnlyFailedSpecs: <boolean>, // When this option is enabled, reporter will create screenshots only for specs that have failed their expectations.
+    allScriptsTimeout: <ms>, // Timeout value for each test in miliseconds.
+
+    cephCluster: { // Contains all ceph cluster definitions
+      cluster1: { // Defines a cluster
+        name: '<cluster_name>', // The name of the ceph cluster.
+        pools: { // Contains all pool definitions for this cluster
+          cephPool1: { // Defines a pool
+            name        : '<ceph_pool_name>',
+            size        : '<size>',
+            unit        : 'GB',
+            writable    : '<isWritable>' // If $isWritable is false nothing will be created on the pool.
+          },
+          cephPool2: { // Defines a pool
+            name        : '<ceph_pool_name>',
+            size        : '<size>',
+            unit        : 'GB',
+            writable    : '<isWritable>' // If $isWritable is false nothing will be created on the pool.
+          }
+        }
+      }
+    }
+  };
+}());

@@ -1,0 +1,32 @@
+<oa-delete-confirmation-modal title="{{ ($ctrl.resolve.rbdSelection.length > 1) ? 'Delete RBDs' : 'Delete RBD' }}"
+                           on-confirm="$ctrl.delete()" on-cancel="$ctrl.cancel()">
+  <!-- single rbd -->
+  <div ng-if="$ctrl.resolve.rbdSelection.length === 1">
+    <p>
+      You are about to delete the RBD <strong>{{$ctrl.resolve.rbdSelection[0].name}}</strong>.
+    </p>
+    <p>
+      Be aware that you will <strong>lose all data</strong>
+      in that RBD and that this operation <strong>cannot be undone</strong>.
+    </p>
+  </div>
+  <!-- end single rbd -->
+
+  <!-- multiple rbds -->
+  <div ng-if="$ctrl.resolve.rbdSelection.length > 1">
+    <p>
+      You are about to delete multiple RBDs.
+    </p>
+    <p>
+      Be aware that you will <strong>lose all data</strong>
+      in the RBDs and that this operation <strong>cannot be undone</strong>.
+    </p>
+    <span class="text-danger">The following RBDs will be deleted:</span>
+      <ul class="text-danger">
+        <li ng-repeat="rad in $ctrl.resolve.rbdSelection">
+          {{rad.name}} ({{rad.size | bytes}})
+        </li>
+      </ul>
+  </div>
+  <!-- end multiple rbds -->
+</oa-delete-confirmation-modal>

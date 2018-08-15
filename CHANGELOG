@@ -1,0 +1,862 @@
+openATTIC Changelog
+===================
+
+All notable changes to this project will be documented in this file.
+
+The format is inspired by the `Keep a Changelog <http://keepachangelog.com/>`_
+project, with the exception of using reStructuredText for markup instead of
+Markdown.
+
+To describe their impact on the project, changes are grouped as follows:
+
+* **Added** for new features.
+* **Changed** for changes in existing functionality.
+* **Deprecated** for once-stable features removed in upcoming releases.
+* **Removed** for deprecated features removed in this release.
+* **Fixed** for any bug fixes.
+* **Security** to invite users to upgrade in case of vulnerabilities.
+
+
+[3.6.1] - 2017-12-13
+--------------------
+
+Added
+~~~~~
+* Backend/QA: Increased unit test coverage of rest and userprefs app (OP-2809)
+* WebUI: Add a 'Clear' button to the datatable search field (OP-2900)
+* WebUI: Add a timestamp of last update on the dashboard (OP-2837)
+* Development: Import ``set_symlinks.sh`` in order to create symlinks for
+  building a development environment (OP-2899)
+* Backend/WebUI: Manage iSCSI service per node (OP-2763)
+* Backend/WebUI: Check for DeepSea version requirements (OP-2543)
+
+Changed
+~~~~~~~
+* Backend/QA: Improve auth Gatling tests to check the browser cookie
+  expiry (OP-2921)
+* WebUI: Migration of Dashboard module into Angular (OP-2861)
+* WebUI: Migration of Ceph Erasure Code Profiles module into Angular (OP-2854)
+* WebUI: Migration of Navigation module into Angular (OP-2864)
+* WebUI: Migration of Auth module into Angular (OP-2851)
+* WebUI: Migration of Notification module into Angular (OP-2865)
+* WebUI: Migration of Settings module into Angular (OP-2867)
+* WebUI: Migration of Ceph Nodes module into Angular (OP-2857)
+* WebUI: Migration of Ceph Crushmap module into Angular (OP-2853)
+* WebUI: Migration of Shared module into Angular (OP-2868)
+* WebUI: Migration of User Info module into Angular (OP-2870)
+* WebUI: Migration of Ceph NFS module into Angular (OP-2856)
+* WebUI: Migration of Ceph OSDs module into Angular (OP-2858)
+* WebUI: Migration of Ceph ISCSI module into Angular(OP-2855)
+* WebUI: Migration of Ceph Pools module into Angular (OP-2859)
+* WebUI: Migration of OA module into Angular (OP-2904)
+* WebUI: Migration of Task Queue module into Angular (OP-2869)
+* WebUI: Improve Object Gateway user/bucket filtering (OP-2912)
+* WebUI: Refactor ceph-nfs-state service to improve execution time (OP-2882)
+* WebUI: The datatable does not show any progress if filter options are
+  changed (OP-2920)
+* WebUI: Display meaningful error when creating a RGW user using an existing
+  email address (OP-2902)
+* Backend/WebUI: Usage of task queue on RBD deletion to prevent timeout errors
+  when deleting large RBD images. (OP-2742)
+* WebUI: Migration of Users module into Angular (OP-2871)
+* WebUI: Migration of Ceph RBD module into Angular (OP-2860)
+* WebUI: Object Gateway Buckets now provides endpoint addresses (OP-2908)
+* WebUI: Replace _.isObject with _.isObjectLike (OP-2955)
+* Backend/WebUI: Usage of task queue on iSCSI service management to prevent
+  timeouts (OP-2788)
+* Development: Make ``make_dist.py`` always use the current HEAD revision
+  (OP-2883)
+
+Fixed
+~~~~~
+* WebUI: Get all frontend unit tests working again (OP-2889)
+* Backend: Fix namespace issue with backend/views.py (OP-2896)
+* Backend: Node search field isn't working (OP-2886)
+* Backend: Performance Improvements when listing RBDs (OP-2688)
+* Backend: Fixed Internal Server Error when listing RBDs with missing
+  (OP-2895)
+* Backend: Fixed an error message in the openATTIC log file when
+  issuing `oaconfig install` (OP-2898)
+* Backend: Made Gatling tests more idempotent (OP-2913)
+* Backend/WebUI: Fixed the limitation of the RBD dropdown list to 50
+  elements in the iSCSI add form (OP-2907)
+* WebUI: Fix current user validation on page load (OP-2887)
+* WebUI: Fix random javascript error on RBD form (OP-2824)
+* WebUI: Display error message when no cluster exists (OP-2948)
+* Installation: Removed executable bit from CHANGELOG (OP-2934)
+* Installation: oaconfig: Only parse required settings from config file
+  (OP-2985)
+* WebUI: Fix problem with persistent notification options (OP-2952)
+* WebUI: Fix typo in settings notification (OP-2953)
+* Backend: Fix "test_bucket_get" Django unit test (OP-2947)
+* WebUI: Fix javascript error after remove RBD size (OP-2966)
+* WebUI: Hide striping preview until RBD size is set (OP-2968)
+* WebUI: Fix Notification call (OP-2978)
+* Backend/WebUI: Adding an iSCSI target in one iSCSI gateway causes the lrbd
+  service to restart all iSCSI targets (OP-2926)
+* WebUI: Fix typo on Ceph OSD scrub buttons (OP-2988)
+
+Removed
+~~~~~~~
+* WebUI: Removed unnecessary heading in RGW name validation unit
+  tests (OP-2901)
+* Packaging: Removed creation of /var/lock/openattic (and /run/lock/openattic
+  respectively) during installation (OP-2946)
+
+Security
+~~~~~~~~
+* Backend: Migrated .secret.txt into a setting in the settings file (OP-2873)
+* Installation: Secure permissions on sysconfig file (OP-2949)
+
+[3.6.0] - 2017-11-01
+--------------------
+
+Added
+~~~~~
+* Backend: The error string of a failed call in an external process does now
+  include the command name (OP-2780)
+* WebUI: Prevent the removal of RGW user that is in use on the settings
+  page. (OP-2737)
+* WebUI: Unit tests for IQN validator (OP-2783)
+* WebUI: Usage of "unsaved changes" dialog on iSCSI form (OP-2254)
+* WebUI: Add HTML linter with a few new rules (OP-2544)
+* WebUI: Add fast-diff help text used in RBD form (OP-2767)
+* Documentation: Added our line length PEP-8 exception to the backend
+  contributing guidelines (OP-823)
+* WebUI: Add no-extra-semi rule to eslint (OP-2844)
+* WebUI/Backend: Use cookies that expire as soon as the user closes their
+  browser (OP-2872)
+
+Changed
+~~~~~~~
+* Backend: Cleaned up pep8 warnings of ceph app (OP-1502)
+* Backend: Cleaned up pep8 warnings of nodb app (OP-1512)
+* Backend: Cleaned up pep8 warnings of rest app (OP-1515)
+* Backend: Cleaned up pep8 warnings of systemd app (OP-1518)
+* WebUI: Display dates in locale date format. All Django DateTimeFields will
+  be returned as ISO 8601 (OP-591)
+* WebUI: Replace babel-preset-es2015 with babel-preset-env (OP-2772)
+* WebUI: Submit buttons should be enabled on invalid forms (OP-2736)
+* WebUI/Backend: Salt-API settings should be optional (OP-2722)
+* WebUI: Prevent modal from closing when clicking on the backdrop (OP-2771)
+* WebUI/QA: Refactored unit test setup (OP-2827)
+* WebUI: Don't allow performing a delete action on buckets shared via
+  NFS (OP-2768)
+* WebUI: Improve eslint rules (OP-2749)
+* WebUI: Migration of Ceph Pools controllers to components (OP-2399)
+* WebUI: Migration of Ceph OSDs controllers to components (OP-2401)
+* Documentation: Mentioned the AngularJS style guide as the coding style
+  for frontend development (OP-824)
+* WebUI: Migration of Ceph Nodes controllers to components (OP-2398)
+* WebUI: Set the minimum pg size to 1 (OP-2875)
+* WebUI: Convert Shared module to ES6 (OP-2532)
+* WebUI: Unify Grafana and Widgets in a single Dashboard page (2754)
+* WebUI: Select the NFS Host automatically, if only one is available (OP-2711)
+* WebUI/QA: Optimize "ceph_pool_creation" e2e test suite (OP-2812)
+* WebUI: Guide user through RBD creation for iSCSI (OP-2181)
+* WebUI: Migration of Ceph RGW controllers to components (OP-2397)
+* WebUI: Migration of Auth controllers to components (OP-2801)
+* WebUI: Convert Settings components to ES6 (OP-2806)
+* WebUI: Convert Grafana components to ES6 (OP-2805)
+* WebUI: Convert Ceph RBD components to ES6 (OP-2803)
+* WebUI: Convert iSCSI components to ES6 (OP-2802)
+* WebUI: Migration of Api Decorator module into Angular (OP-2850)
+* WebUI: Migration of Grafana module into Angular (OP-2863)
+* WebUI: Migration of Ceph Cluster module into Angular (OP-2852)
+* WebUI: Migration of ApiRecorder module into Angular (OP-2848)
+* WebUI: Migration of Registry module into Angular (OP-2866)
+
+Fixed
+~~~~~
+* Backend: The currently logged in user can't delete himself anymore (OP-2738)
+* Backend: Fixed `CephCluster` to return the same `keyring_candidates` twice
+  (OP-2782)
+* Backend/QA: Added missing license header in userprefs/tests.py (OP-2769)
+* Backend: Django SECRET_KEY generated using insufficient entropy (OP-2874)
+* Development: Lint unit test correctly (OP-2828)
+* WebUI: Allow users to type in any size into the RBD form (OP-2730)
+* WebUI/QA: RGW bucket "e2e-rgw-add" is not deleted after RGW suite
+  run (OP-2512)
+* WebUI/QA: Prevent random failure in "2 failed task" test (OP-2735)
+* WebUI/QA: Fix random NFS e2e test failures (OP-2762)
+* WebUI/QA: Fix style issues in protractor.conf.js (OP-2793)
+* WebUI/QA: Prevent random failures in task queue dialog suite (OP-2779)
+* WebUI: Fix the indentation in pool list and form template (OP-2829)
+* WebUI: Fix "use max" links in RBD form (OP-2727)
+* WebUI/QA: Fix random iSCSI e2e test failures (OP-2807, OP-2830)
+* WebUI/QA: Improve e2e testing when running in a slower system (OP-2831)
+* WebUI: Update the displayed NFS state in case of a failed API request
+  (OP-2880)
+* WebUI: Fix RGW name validation (OP-2825)
+
+Removed
+~~~~~~~
+* Backend: Removed `utilities.in_unittest` (OP-2776)
+* WebUI: Removed the need to type "yes" to delete tasks (OP-2770)
+
+[3.5.3] - 2017-10-27
+--------------------
+
+Changed
+~~~~~~~
+* WebUI: Now it is possible to delete a RGW user with buckets (OP-2790)
+* WebUI/QA: Update Karma config with Cobertura report and ChromeHeadless
+  (OP-2725)
+* Backend: Use health's "status" instead of "overall_status" (OP-2845)
+
+Fixed
+~~~~~
+* Backend: Fixed db corruption when running `oaconfig install` (OP-2784)
+* Backend: Fixed Settings page doesn't save new keyring information properly
+  (OP-2729)
+* Backend: Fixed "No SystemD in ifconfig.systemapi" Message (OP-2774)
+* Backend: The Grafana dashboard will now be shown automatically when
+  upgrading from oA 2.x to 3.x (OP-2843)
+* Deployment: Add "PreReq: %fillup_prereq" to SUSE spec file (OP-2808)
+
+[3.5.2] - 2017-10-10
+--------------------
+
+Added
+~~~~~
+* WebUI: Do not delete buckets that are referenced/used, e.g. by NFS (OP-2536)
+
+Changed
+~~~~~~~
+* WebUI: RBD features: Add more information to features that
+  require another feature to be enabled (OP-2765)
+* WebUI: Add separator between action buttons in Ceph OSD page (OP-2748)
+
+Fixed
+~~~~~
+* Backend: Fixed Erasure Code Profile creation (OP-2758)
+* Backend: Hide the "machine" drop-down on the Nodes tab (OP-2510)
+* Backend: Fixed `module_status/ceph_deployment`: behave exactly as
+  `module_status/ceph` (OP-2720)
+* WebUI/QA: Fix random ceph pool creation e2e test (OP-2762)
+* WebUI: Fix error when creating RBD without size (OP-2756)
+
+Removed
+~~~~~~~
+
+[3.5.1] - 2017-10-05
+--------------------
+
+Added
+~~~~~
+* Backend: Addded routes to trigger scrub per OSD, single host and many hosts
+  (OP-2603)
+* WebUI/Backend: Log frontend exceptions into openattic.log (OP-2695)
+* WebUI: Add scrub option to Ceph Nodes and OSDs (OP-2613)
+* WebUI: Added RBD striping graphical preview (OP-2654)
+* WebUI: Display OSDs list for each Ceph Node (OP-2273)
+* WebUI/QA: Add missing validation test for the RBD form (OP-2693)
+* WebUI/QA: Add missing cleanup to e2e suites (OP-2635)
+* WebUI/QA: Add plugin to stop protractor after first failed test (OP-2694)
+* WebUI: Introduced frontend unit test (OP-952)
+* Documentation: Add Python Unit Tests chapter to the Developer Documentation
+  (OP-2739)
+
+Changed
+~~~~~~~
+* WebUI: Improve taskQueueSubscriber (OP-2674)
+* WebUI: Replace grunt for webpack (OP-2566)
+* WebUI: Replace bower for npm (OP-2567)
+* WebUI: Hiding the cluster selection in RBD form if only one cluster exists
+  (OP-2684)
+* WebUI: Update AngularJS to 1.5.11 (OP-2709)
+* WebUI/QA: Move e2e folder into webui (OP-2645)
+* WebUI: Convert NFS module to ES6 (OP-2532)
+* WebUI: Replace interval with event listener for grafana resize (OP-2724)
+
+Fixed
+~~~~~
+* WebUI/QA: Fix task queue waiting errors (OP-2629)
+* Backend: Fixed `osd pool set`: unrecognized variable `crush_ruleset`
+  (OP-2651)
+* Backend: Nodes Tab may not list IPs for hosts without OSDs (OP-2679)
+* Backend: The settings page will be accessible even if no valid keyring file
+  was found automatically (OP-2687)
+* Backend: Fix unable to disable pause flag (OP-2702)
+* Backend: Fixed the Grafana proxy implementation for the updated
+  Grafana version 4.5.1 (OP-2705)
+* Backend: Added blank .py files in order to prevent anyone from importing old
+  *.pyc files (OP-2700, OP-2699)
+* Backend: Fixed warning in `oaconfig`, if a keyring or keyring user has been
+  set in `/etc/sysconfig/openattic` (OP-2732)
+* Backend: Hidden dashboard select box of Grafana on various pages (OP-2746)
+* Backend: 'keyring_or_none' will now check if an available keyring file is
+  readable for the openATTIC user (OP-2757)
+* WebUI/QA: Fix Cluster-wide OSD Flags e2e failures (OP-2668)
+* WebUI/QA: Harden task queue deletion test cases (OP-2626)
+* WebUI: Fix ugly borders in the task queue table (OP-2491)
+* Backend: Fixed OSD table filtering (OP-2692)
+* WebUI/QA: Fix random NFS e2e add export failure (OP-2672)
+* WebUI/QA: Fixed duplicated CSS test class in RBD form (OP-2721)
+* WebUI: Add context root to the webpack configuration (OP-2697)
+* WebUI: Fix missing html files (OP-2698)
+* WebUI/QA: Increased test task times in the directive suite (OP-2671)
+* WebUI: Showing the right pool size in the pool table (OP-2710)
+* Development: Stop dev server refreshes on vim changes (OP-2715)
+* WebUI: Not all graphs are displayed on the RBD statistics page (OP-2716)
+* WebUI: Fixes pool size table tooltip (OP-2539)
+* WebUI: Improve error handling of MON-widget (OP-2658)
+* WebUI: Removed error message when accessing iSCSI without Salt-API (OP-2728)
+* WebUI: Add button to show/hide passwords on the settings page (OP-2734)
+* Packaging: Fixed make_dist.py error with particular switches used (OP-2628)
+* Packaging: Updated `make_dist.py` to reflect the changes since the
+  introduction of webpack and the moved E2E folder (OP-2717)
+
+Removed
+~~~~~~~
+* WebUI: Refactored node service (OP-2122)
+* WebUI: Remove the deprecated oaTabView module (OP-2706)
+* Development: Removed old `virtualenv` requirements.txt entries (OP-2675)
+* Development: Remove Support for Django 1.7 (OP-2708)
+* Backend: Removed unnecessary %used calculation workaround for
+  Luminous (OP-2370)
+* Backend: Removed Hosts model (OP-2589)
+* Backend: Cleanup systemd module (OP-2677)
+* Backend: Remove `cmdlog` Module (OP-2683)
+* Documentation: Remove Django 1.6 database migration documentation (OP-2723)
+
+[3.5.0] - 2017-09-14
+--------------------
+
+Added
+~~~~~
+* Documentation: Added Troubleshooting chapter (OP-1070)
+* Backend: Added `osd_flags` to `CephCluster` (OP-2598)
+* QA/Development: Export HTML e2e report (OP-2261)
+* WebUI: Add Ceph cluster settings modal (OP-2599)
+* WebUI: iSCSI Target dialog should support RBDs with data-pool
+  enabled (OP-2633)
+* WebUI: Add Feedback panel to the UI (OP-100)
+* WebUI: Ceph pool `Placement Groups` and `Applications` edition (OP-2608)
+* WebUI: Enable the RBD striping-v2 feature (OP-2454)
+
+Changed
+~~~~~~~
+* Packaging: Depend on Ceph Luminous (OP-2622)
+* WebUI: Upgrade Protractor (OP-2618)
+* Documentation: Changed the project descriptions in `README.rst` and
+  `openattic.spec` to reflect the wording used on openattic.org (OP-2643)
+* WebUI/QA: Improve protractor report configuration (OP-2647)
+* WebUI/QA: Improve the e2e framework to execute tests in a Vagrant box
+  environment (OP-2640)
+* Documentation: Update e2e documentation (OP-2329)
+* WebUI: Replace JSCS and JSHint with ESLint (OP-2597)
+* WebUI: Hide RBD usage percentage bar if no usage information is
+  available (OP-2639)
+* WebUI: Fix 'Configure Cluster-wide OSD Flags' header button
+  position (OP-2657)
+* WebUI: Display an error message when the loading of the form data
+  fails (OP-2656)
+* Installation: Drop database when calling `oaconfig install` without data
+  loss (OP-2577)
+
+Fixed
+~~~~~
+* Backend: Stop `requests.packages.urllib3` from spamming the log
+  file (OP-2616)
+* WebUI/QA: Fix random e2e failure - ceph rgw buckets should delete the
+  test user (OP-2627)
+* Fixed Grafana Node Statistics are not immediately visible in oA (OP-2634)
+* Backend: Fixed `KeyError: 'hostname'` in nodes tab (OP-2638)
+* Backend: Fixed deleting Pools with Luminous (OP-2216)
+* WebUI/QA: Fix random NFS e2e timeout failure (OP-2641)
+* WebUI: Fix dashboard error if no user profile exists (OP-2649)
+* WebUI: The statistic/detail tab page is still displayed when the
+  datatable is reloaded (OP-2537)
+* Installation: Fixed database migration `ifconfig.0005` (OP-2646)
+* WebUI: MON widget will verify if timechecks are there (OP-2655)
+* WebUI/QA: Harden task queue directive test cases (OP-2619)
+* WebUI/QA: Fix random e2e test failure (OP-2621)
+* Backend: Internal Server Error when creating a new NFS export with
+  "Object Gateway" as type. (OP-2652)
+
+Removed
+~~~~~~~
+
+[3.4.4] - 2017-08-31
+--------------------
+
+Added
+~~~~~
+* WebUI: No clusters configured message on settings page (OP-2535)
+* Backend: Provide Ceph pool application metadata in the API (OP-2593)
+* Backend: Fixed internal server error, if DeepSea's pillar data doesn't contain
+  "public_network" (OP-2595)
+* Node list is now accessible without DeepSea (OP-2602)
+* WebUI: Create pools with application tags (OP-2591)
+
+Changed
+~~~~~~~
+* WebUI: Relocate cluster related code from oaCephModuleLoader to
+  oaCephClusterLoader (OP-2513)
+* WebUI: Improve forms initial rendering (OP-2559)
+* WebUI: Allow the modification of existing RGW user capabilities (OP-2319)
+* Backend: Removed some outdated and unused Django models (OP-2586)
+* Backend: Prefer the openattic (firstly) and the admin (secondly) keyring user
+  over any other (OP-2523)
+* Remove on mon_hosts, mon_initial_members and public_address from DeepSea
+  pillar (OP-2606)
+
+Fixed
+~~~~~
+* WebUI: OSD, RBD and Pool tabs are broken without DeepSea (OP-2571)
+* WebUI: Error after remove iSCSI "Discovery authentication" (OP-2550)
+* Packaging: Fixed regression in make_dist.py which caused `cache push` to fail
+  on empty cache (OP-2587)
+* WebUI: Fix wrong angular module declaration (OP-2588)
+* WebUI: Ceph health widget does not display the error and warning messages
+  (OP-2610)
+* Backend: Fixed systemd error "Not an absolute path, ignoring: ${SYSD_PIDFILE}"
+  in service file (OP-2570)
+* WebUI/QA: Refactored pool form element verification (OP-2609)
+
+Removed
+~~~~~~~
+* Packaging: Removed all unnecessary (local storage related) packages from the
+  spec file (OP-2211)
+
+[3.4.3] - 2017-08-17
+--------------------
+
+Added
+~~~~~
+* WebUI: Enabled grafana statistics for RBDs (OP-2475)
+* WebUI: Enable providing a dedicated data pool when creating RBDs (OP-2315)
+* WebUI: Add Ceph Object Gateway user statistics (OP-2214)
+* Development: Add support for ECMAScript6 using Babel (OP-1890)
+* Documentation: Add documentation how to use local settings (OP-2549)
+* WebUI: Add Pool compression (OP-2470)
+* Backend: Add "/api/host/current" service to get the current openATTIC host
+  (OP-2496)
+* WebUI: Display openATTIC version on the settings page (OP-2496)
+* Packaging: `make_dist.py` now replaces the Version: tag in the RPM spec
+  file automatically (OP-2256)
+* WebUI: Add helper text for NFS "pseudo" and "tag" (OP-2554)
+
+Changed
+~~~~~~~
+* Development: Upgrade Vagrant box to openSUSE Leap 42.3 (OP-2579)
+* Development: Ensure that the webserver and oA systemd are killed when the
+  Vagrant helper scripts are interrupted via CTRL-C (OP-2578)
+* WebUI: Execute requests in parallel to speedup RBD list loading (OP-2552)
+* WebUI: Migration of Ceph iSCSI controllers to components (OP-2372)
+* WebUI: Removed expert settings from RBD form (OP-2518)
+* WebUI: Improved usability of modal dialogs (OP-2560)
+* Documentation: Updated Ceph keyring installation chapter (OP-2505)
+* Packaging: Renamed openattic RPM spec files (OP-1950)
+* WebUI: The password of a user can be changed now (OP-4)
+* WebUI: Remove unnecessary toasty messages (OP-2563)
+* WebUI: NFS Tag displayed only for NFSv3 protocol (OP-2555)
+* Documentation: Documentation cleanups and updates (OP-2580)
+
+Fixed
+~~~~~
+* WebUI/QA: Unstuck RBD and pool creation tests (OP-2574)
+* WebUI/QA: Fixed element not clickable in task-queue suite (OP-2262)
+* Backend: Failed to create RBD with expert settings enabled but without any
+  selected features (OP-2541)
+* Backend: Handle IPv6 netmask with suffix gracefully (OP-2547)
+* Backend: Added user name and keyring file information to RBD command
+  call (OP-2553)
+* Backend: Fixed hanging of `systemctl stop openattic-systemd` (OP-2444)
+* Backend: Fixed error in `get_rbd_performance_data` task by catching an
+  exception (OP-2057)
+* WebUI: Fixed default action when selecting multiple RBDs (OP-2546)
+* Installation: fix ownership/permissions of `/var/log/openattic` in the SUSE
+  RPM package to fix a logrotate failure (OP-2517)
+* WebUI: Fixed rule set selection problem in pool form (OP-2564)
+* WebUI: Javascript error on edit NFSv3 export (OP-2576)
+
+Removed
+~~~~~~~
+* Backend: The Nagios backend module has been removed due to Prometheus/Grafana
+  integration (OP-2436)
+
+[3.4.2] - 2017-08-03
+--------------------
+
+Added
+~~~~~
+* Backend: Enable compression on Ceph pools on BlueStore OSD Pools (OP-2309)
+* Backend: The data_pool parameter will now be recognized by creating an
+  RBD (OP-2317)
+* Backend: Added settings to allow overwriting the cluster by DeepSea (OP-2502,
+  OP-2483, OP-2339)
+* WebUI: iSCSI - Add help text on Images field (OP-2508)
+* WebUI: Add support for local configs (OP-2469)
+* WebUI: Make Ceph keyring configurable from the UI (OP-2504)
+* WebUI: RBD - Add information about features unsupported by iSCSI (OP-2522)
+* Installation: Add `SALT_API_*` and `RGW_API_*` to the openATTIC sysconfig
+  file (OP-2280)
+* WebUI: Add helper component (OP-2527)
+* WebUI: Create ec overwrite enabled pools in the UI (OP-2357)
+* WebUI: Calculate the best pg size for a pool (OP-2377)
+
+Changed
+~~~~~~~
+* WebUI: Migration of Ceph RBDs controllers to components (OP-2400)
+* Backend/QA: RGW proxy Gatling tests are disabled by default (OP-2525)
+* WebUI: Improve suggested iSCSI target IQN format (OP-2511)
+* Development: Remove Vagrant required-changes.patch file (OP-1446)
+* Backend: Cached Grafana CSS to optimized the iframe loading performance
+  (OP-2509)
+* WebUI: Enabled crush rule set for all pool types (OP-2378)
+
+Fixed
+~~~~~
+* Backend: DeepSea's pillar data may not contain `roles` for a minion (OP-2507)
+* Backend: Allow `CephRbd.features` to be empty (OP-2506)
+* WebUI: Allow the deletion of non-empty S3 buckets (OP-2503)
+* WebUI: The copy to clipboard button does not work with password
+  fields (OP-2501)
+* WebUI: Fix various issues when no Ceph cluster can be loaded. Additionally
+  add a visual feedback while loading the Ceph clusters (OP-2493)
+* Backend: Fixed ceph django unit tests (OP-2526)
+* Backend: Use the correct username and keyring to connect to CephFS (OP-2515)
+* WebUI: Remove the use of the old format in RBD form (OP-2538)
+
+[3.4.1] - 2017-07-20
+--------------------
+
+Removed
+~~~~~~~
+* Backend: Removed all signals from the nagios module in preparation
+  for the complete removal (OP-2500)
+
+[3.4.0] - 2017-07-20
+--------------------
+
+Added
+~~~~~
+* Backend: The 'allow_ec_overwrites' flag will now be recognized by
+  creating an erasure coded pool (OP-2356)
+* Backend: OSD list is now filterable by 'osd_objectstore' (OP-2417)
+* Backend: Automatically reload Grafana settings after openattic
+  config file changed (OP-2426)
+* Backend/WebUI: Added support for Salt-API "sharedsecret" eauth
+  authentication (OP-2451)
+* Backend: Added `stripe_unit` and `stripe_count` to the RBD management
+  API (OP-2236)
+* WebUI: Add a menu to navigate to the users buckets (OP-2382)
+* Backend: Added Grafana configuration to the settings REST service
+  (OP-2450)
+* Backend: Returns the status of the Grafana integration through the
+  API (OP-2438)
+* Backend: Added the functionality to filter the Ceph pool list by the
+  enabled flags of a pool (OP-2446)
+* Backend: Added REST service to check Grafana connection (OP-2449)
+* Backend: Add support to override settings via backend/settings_local.conf
+  (OP-2473)
+* WebUI: Make Grafana configurable from the UI (OP-2427)
+* WebUI: Gracefully handle not properly configured Grafana (OP-2434)
+* Backend: Add time-sync-status to the API (OP-2495)
+* WebUI: Display help text for shared secret key configuration in
+  settings page (OP-2479)
+* Backend/QA: Added test to check that the `version.txt` matches the server
+  version (OP-2921)
+
+
+Changed
+~~~~~~~
+* WebUI: Refactors add form template (OP-2420)
+* WebUI: Adapted the paths to grafana dashboards to the latest deepsea
+  changes (OP-2442)
+* WebUI: Rename "Clone" button to "Copy" (OP-2478)
+* WebUI: iSCSI - Rename "Target" to "Target IQN" (OP-2481)
+* Backend: Cope with the new Ceph health format (OP-2489)
+* WebUI: Add support for new Luminous Ceph health format (OP-2471)
+* WebUI: Enhance troubleshooting hints when Salt REST API is not reachable
+  (OP-2492)
+* Backend: Hide the controls of the Grafana graphs for OSDs, Nodes and
+  Pools (OP-2423)
+
+Removed
+~~~~~~~
+* Installation: Removed Nagios and PNP4Nagios from the RPM package and
+  removed configuration from `oaconfig` (OP-2267)
+* Backend: All Nagios relations have been removed from the Ceph
+  module (OP-2490)
+* Backend: Removed unused ceph/systemapi.py (OP-2494)
+* WebUI: Removed all Nagios relations from UI and e2e test (OP-2448)
+
+Fixed
+~~~~~
+* Backend: The status module returns "available" for modules missing
+  the status.py file. (OP-2441)
+* Backend: The status module returns JSON if a module couldn't be
+  found by now. (OP-2440)
+* WebUI: Remove unique name errors in pool form (OP-2421)
+* Development: Add cephfs.so to Vagrant's virtual environment (OP-2463)
+* Development: Fix various issues in the Vagrant box installer script.
+* Backend: Commented settings should not be removed by openATTIC
+  (OP-2459)
+* WebUI: Grafana loading spinner will be displayed as well as the icon in the
+  notification list now (OP-2431)
+* Backend: Handle JSON decode exception in REST Client class (OP-2476)
+* Backend/WebUI: Fixed the usage/configuration of the RGW_API_RESOURCE
+  setting (OP-2415)
+* Backend/WebUI: Fixed check of RGW system user permissions in RGW status
+  module (OP-2416)
+* Backend: Fixed RGW system user permissions check in NFS module (OP-2465)
+* Backend: Initialize all Nodb fields with their defaults (OP-2279)
+* WebUI: Grafana - Add cancellation of resize interval (OP-2482)
+* WebUI: The min-height of the grafana iframe is 600px now. So, the iframe
+  isn't too small anymore if the dashboard couldn't be loaded (OP-2486)
+* WebUI: Fixed settings page if RGW config is not available in DeepSea (OP-2433)
+* WebUI: Fixed spacing between button icons and text (OP-2452)
+
+[3.3.0] - 2017-07-06
+--------------------
+
+Added
+~~~~~
+* Backend: Gracefully handle not properly configured modules (OP-2362)
+* WebUI: Gracefully handle not properly configured modules (OP-2363)
+* WebUI/QA: Handling of unsaved changes dialog (OP-2189)
+* WebUI: Add UI to manage Object Gateway buckets (OP-2368)
+* Backend: Implemented a proxy for the access to the Grafana API (OP-2344)
+* Backend: Implementation of module settings support (OP-2225, OP-2433)
+* WebUI: Make the Salt REST API and RGW configurable from the UI (OP-2226)
+
+Changed
+~~~~~~
+* Development: Updated SUSE oA repo URL and the Vagrant box image (OP-2467)
+* Development: Remove editor-specific `# kate: space-indent on...` comments
+  from the code base and replace them with an editor-neutral configuration
+  file based on the `EditorConfig project <http://editorconfig.org/>_
+  (OP-1918)
+* Backend: Added support for different modules in FsidContext class (OP-2369)
+* WebUI: Replaces "clusterId" usage with "fsid" (OP-2354)
+* WebUI: Manage service button moved to datatable toolbar for both NFS and
+  iSCSI (OP-2380)
+* WebUI: Hide the details tabset if there is only one visible tab (OP-2393)
+* WebUI/Development: Added support for additional actions on
+  datatable (OP-2380)
+* Backend: CephFS client API support for different Ceph clusters (OP-2371)
+* Backend: Added support for SSL error exception in REST Client class (OP-2407)
+* WebUI: Replaced Nagios Ceph pools graphs with Grafana graphs, because of a
+  better performance. Also, added a dedicated Grafana dashboard that can be
+  used when a openATTIC dashboard, with the name Grafana, is created (OP-829)
+  Test, that have failed after the changes, has been fixed (OP-2406, OP-2413)
+
+Fixed
+~~~~~
+* WebUI: Resets graph data if needed (OP-2358)
+* WebUI: Hiding graph loading error message if graph data is
+  unavailable (OP-2002)
+* WebUI: Error 500 if Object Gateway API not accessible (OP-2418)
+* QA/Development: Fix JSON of e2e linter configuration (OP-2364)
+* Backend: Fix exception handling in the RGW backend (OP-2383)
+* Backend: Prevent the 'ValueError: No JSON object could be decoded' error if
+  the result value of a mon_command is an empty string (OP-2345)
+* Backend: Add support for `ceph.conf` generated by
+  `vstart.sh` or Crowbar (OP-2301)
+* Backend: Also allow "crush_rule" for "crush_ruleset". (OP-2381)
+
+[3.2.0] - 2017-06-22
+--------------------
+
+Added
+~~~~~
+* WebUI: Add ability to show/hide passwords (OP-2242)
+* WebUI: Created MON widget (OP-1933)
+* WebUI: NFS-Ganesha user interface (OP-2195)
+* WebUI: Adds backend storage column to OSD table (OP-2346)
+* WebUI: Add status page to RGW user management (OP-2292)
+* WebUI: Gracefully handle not properly configured NFS module (OP-2337)
+* WebUI/Development: Added an angular service to simplify the interaction with
+  background tasks (OP-2349)
+* WebUI/Development: Added an angular filter that returns the ordinal value of
+  a number (OP-2350)
+* WebUI/Development: Added the oaTabSet component that deprecates oaTabView
+  directive (OP-2351)
+* Backend: Added OS errno to the REST Client connection error message (OP-2303)
+* Backend: Task metadata support in the TaskQueue (OP-2324)
+* Backend: REST Client class improvements (OP-2325)
+* Backend: NFS-Ganesha management implementation (OP-2196)
+* Backend: Added 'osd_objectstore' to the OSD model (OP-2333)
+* Backend: ceph_nfs module status service (OP-2336)
+
+Changed
+~~~~~~~
+* WebUI/QA: Refactored RBD common library (OP-2286)
+* WebUI/QA: Reduced RBD creations in RBD creation suite (OP-2287)
+* WebUI: Improve iSCSI state descriptions and icons (OP-2320)
+* WebUI: Edit iSCSI target by clicking on target id (OP-2247)
+* WebUI: If some column was added/renamed, openATTIC should display the new
+  table column (OP-2112)
+* WebUI: Replaces id with fsid in pools service and usage (OP-2121)
+* WebUI: Various improvements in the RGW usermanagement UI, e.g. notify user
+  about unsaved changes (OP-2255), preselect 'Generate key' and 'Generate
+  secret'. Fixed test cases (OP-2353)
+* Backend: RadosGW Proxy refactoring (OP-2326, OP-2295)
+* Packaging: Consolidate subpackages into a single `openattic` RPM (OP-2342)
+
+Fixed
+~~~~~
+* WebUI: Harden RBD statistics watcher function (OP-2310)
+* Development: Fix requirement files (OP-2316)
+* WebUI: Restrict RBD form to replicated pools (OP-2314)
+* WebUI: Health widget will not show empty alerts (OP-2263)
+* Backend: Fixed validation of urls array for DeepSea ui_rgw call (OP-2338)
+
+[3.1.1] - 2017-06-08
+--------------------
+
+Added
+~~~~~
+* WebUI: Add user/bucket quota support to Object Gateway (RGW) user management
+  UI (OP-766 and OP-767).
+* WebUI: Added status icons in front of cluster health status in health widget
+  (OP-2178)
+* WebUI: Show the required field symbol in the RBD form (OP-2204)
+* Packaging: Added `--sign` option to `make_dist.py` to sign tarballs with GPG
+  (OP-2124)
+* Backend/QA: Created basic Gatling tests for the RGW proxy implementation
+  (OP-2153)
+
+Changed
+~~~~~~~
+* WebUI: Upgrade angular-ui-router to version 1.0.3 (OP-2221)
+* Installation: Don't allow localhost as the host name for the local host
+  (OP-2258)
+* Monitoring: replaced deprecated configuration variable names (OP-2288)
+* Packaging: Enable byte-compiling the Python files during RPM packaging
+  (OP-2167)
+
+Fixed
+~~~~~
+* Backend: Fix an issue in a multinode setup caused by an newer DRF
+  version in Ubuntu 16.04.(OP-2138)
+* Backend: Disable CSRF tokens for RGW proxy if token authentication is
+  used (OP-2284)
+* Backend: Make rest_client.py throw exceptions in the expected format
+  (OP-2284/OP-2281)
+* Backend: Added missing `volumes.models` module (Django 1.7) (OP-2300)
+* Backend: Fix ugly DeprecationWarning (OP-1764)
+* Backend: Add formulas to calculate the usage of a Ceph pool correctly (for
+  Ceph Luminous and Jewel) (OP-2128)
+* Backend: Fix failing OSD list after an OSD has been removed (OP-2279)
+* Backend: 'oaconfig install' does no longer fail if a Ceph cluster is
+  inaccessible while updating the Nagios configs (OP-2291)
+* Backend: Fixed broken dashboard, if `rbd ls` hangs (OP-2294)
+* Backend/QA: Fixed Gatling tests to be used with newest versions of
+  xmlrunner (OP-2266/OP-2305)
+* WebUI: Improved rendering output of notification messages (OP-2278)
+* WebUI: Health widget will not show empty alerts (OP-2263)
+* Packaging: Adapt `build_deb_packages` to the changes made in `make_dist` for
+  3.0
+
+[3.1.0] - 2017-05-24
+--------------------
+
+Added
+~~~~~
+* Backend: Obtain Rados Gateway credentials from DeepSea to enable
+  the RGW proxy (OP-2154)
+* Backend: Adds search field to the API for RBDs (OP-2199)
+* Development: Allow developers and test systems to override
+  `backend/settings.py` (OP-2207)
+* WebUI: Add Object Gateway user management. (OP-762)
+
+Changed
+~~~~~~~
+* Backend: The monitoring of RBDs without 'fast-diff' feature has been disabled
+  due to performance reasons (OP-2141)
+* Backend: Improved REST clients' error message on connection error (OP-2209)
+* Backend: Moved iSCSI management code from ceph_deployment to its own module
+  (OP-2192)
+* WebUI: Required field symbol color changed to red (OP-2215)
+* WebUI/QA: More useful ceph pool tests (OP-2205)
+* WebUI: Disable the "striping" feature when creating RBD images (OP-2240)
+* WebUI: Display a user friendly help text in the GUI for the monitoring of RBDs
+  without 'fast-diff' feature (OP-2223)
+* WebUI: iSCSI - Only allow to use RBD images with (kernel module) compatible
+  features (OP-2232)
+* WebUI: Preselect cluster if only one exists for widgets (OP-2151)
+* Installation: Moved DB migration code from ``oaconfig install`` to a Django
+  command (OP-2160)
+
+Fixed
+~~~~~
+* WebUI: Rephrases "Sorry Folks" message to be useful (OP-2210)
+* WebUI: Changes default widget config to point to the right widget (OP-2203)
+* WebUI: Resolves error in health widget (OP-2191)
+* Packaging: Re-added `volumes` directory to the base package (OP-2166)
+* Backend: Fixed `oaconfig install` on Django 1.7+ installations
+  (OP-2166, OP-2169)
+* Packaging: Fix re-introduced bug with retrieval of local paths in
+  make_dist.py (OP-2224)
+* Packaging: Fix internal commit functionality of make_dist.py (OP-2227)
+
+[3.0.0] - 2017-05-15
+--------------------
+
+In general, this release focuses on the 3.0 refactoring and cleanup epic
+(OP-2071)
+
+Added
+~~~~~
+* Backend: Ceph iSCSI targets management REST Api (OP-2133)
+* Backend: Added the functionality to reset the password of an user (OP-589)
+* Backend: Generic REST client support classes (OP-1889)
+* Backend: Salt REST API support (OP-1889)
+* Backend: Implemented a RGW Admin Ops API proxy (OP-1612)
+* Backend: Made `backend/settings.py` variables' adaptable (OP-2156)
+* WebUI: Ceph iSCSI targets management (OP-2134)
+* WebUI: Introduce a set of commands to build the frontend (OP-1752)
+* WebUI: Added OSD status widget (OP-1937)
+* WebUI: Add API timeouts to the UI (OP-1544)
+* WebUI: Display a warning dialog if there are unsaved changes and the view is
+  changed. Thanks to Tiago Melo for the contribution. (OP-1732)
+* WebUI: Added a new navbar entry to show recent notifications
+  Thanks to Tiago Melo for the contribution. (OP-1989)
+* WebUI: Add expression support to the ngRequired directive.
+* WebUI: Added eslint configuration for best practice angular development
+  (OP-2130)
+* WebUI: Added a list of the recent notifications. Thanks to Tiago Melo for the
+  contribution. (OP-1989)
+* WebUI/QA: Added eslint configuration for e2e tests (OP-2148)
+
+Changed
+~~~~~~~
+* Backend: Corrected num_bytes unit in check_cephpool Nagios plugin (OP-1532)
+* Backend: Salt minions information is now populated using Salt-API (OP-1889)
+* WebUI: re-enabled the minions and pillar data listing (OP-1889)
+* WebUI: Renames osd service cluster id to fsid (OP-2110)
+* WebUI/QA: Adapted tests (OP-2092)
+* WebUI: Combined add/edit controller and templates of widgets and dashboards
+  (OP-2111)
+* WebUI: Improved Ceph health widget (OP-1738)
+* API: Convert Postgres based Crushmap API to NoDB (OP-1273)
+* WebUI: The WebUI no longer depends on the DB API endpoint (OP-2145)
+
+Removed
+~~~~~~~
+* Backend/QA: Removed all local-storage related Gatling tests (OP-2119)
+* WebUI: Removed all local-storage functionality of openATTIC (OP-2073)
+* WebUI/QA: Removed all unnecessary local storage tests of openATTIC (OP-2092)
+* For more information why we dropped the local-storage support, see:
+  https://www.openattic.org/posts/implementing-a-more-scalable-storage-management-framework-in-openattic-30/
+
+Fixed
+~~~~~
+* WebUI: Redirect to dashboard when an authenticated user navigates to login
+  page. Thanks to Ra�l Vega for the contribution. (OP-2029)
+* WebUI: Removed confusing "Sorry folks" message displayed during the loading
+  of data tables (OP-1333)
+* WebUI: Remove checkbox column in Ceph Nodes. (OP-2150)
+* WebUI: Re-enable 'Submit' button on oaDeleteConfirmationModal after failure
+  from server (OP-2114)
+* Packaging: Fix error that prevented to use local sources to create tar
+  archives using make_dist.py (OP-2140)
+
+The CHANGELOG for openATTIC 2.x and older is maintained in the `2.x` git
+branch, which was branched off the master branch at git revision
+670c60766c5a8be7844fb663f610ee59a7afebaf. This CHANGELOG only keeps track
+of changes that have been applied after this point.
